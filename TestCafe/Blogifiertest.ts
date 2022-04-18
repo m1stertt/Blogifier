@@ -1,7 +1,7 @@
 import {Selector} from 'testcafe';
 import {ClientFunction} from 'testcafe';
 fixture`Blogifier Test`
-    .page`http://localhost:5000/admin/register`;
+    .page`http://localhost:9888/admin/register`;
 
 test('Blogifier Create admin test', async t => {
 
