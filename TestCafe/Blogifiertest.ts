@@ -1,7 +1,9 @@
 import {Selector} from 'testcafe';
 import {ClientFunction} from 'testcafe';
+
+const URL = 'http://localhost:9888';
 fixture`Blogifier Test`
-    .page`http://localhost:9888/admin/register`;
+    .page`${URL}/admin/register`;
 
 test('Blogifier Create admin test', async t => {
 
@@ -54,7 +56,7 @@ test('Blogifier Create admin test', async t => {
     const getLocation = ClientFunction(() => document.location.href);
     // Check if page has changed to login
     await t
-        .expect(getLocation()).contains('http://localhost:5000/admin/login');
+        .expect(getLocation()).contains(`${URL}/admin/login`);
 
     // await t
     //     .expect(ClientFunction(() => document.location.href)()).contains('http://localhost:5000/admin/login');
