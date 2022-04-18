@@ -3,6 +3,8 @@ pipeline {
     environment {
         TIMESTAMP = sh(script: "date +%s", returnStdout: true).trim()
         SCREENSHOT_PATH = "screenshots/${TIMESTAMP}"
+        TEST_FOLDER="TestCafe"
+        TEST_FILES="/tests/Blogifiertest.ts"
     }
     stages {
         stage("Build UI") {
@@ -22,7 +24,8 @@ pipeline {
         }
         stage("Execute UI tests") {
             steps {
-                echo "Find a way to let Jenkins execute your TestCafé tests here"
+                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host -it testcafe/testcafe chromium ${TEST_FILES} -s takeOnFails=true path=/screenshots"
+                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host -it testcafe/testcafe firefox ${TEST_FILES} -s takeOnFails=true path=/screenshots"
             }
             post {
                 always {

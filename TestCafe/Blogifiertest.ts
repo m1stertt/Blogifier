@@ -56,7 +56,7 @@ test('Blogifier Create admin test', async t => {
     const getLocation = ClientFunction(() => document.location.href);
     // Check if page has changed to login
     await t
-        .expect(getLocation()).contains(`${URL}/admin/login`);
+        .expect(getLocation()).contains(`${URL}/admin/logdasdain`);
 
     // await t
     //     .expect(ClientFunction(() => document.location.href)()).contains('http://localhost:5000/admin/login');
