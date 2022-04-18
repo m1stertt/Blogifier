@@ -1,7 +1,7 @@
 import {Selector} from 'testcafe';
 import {ClientFunction} from 'testcafe';
 
-const URL = 'http://localhost:9888';
+const URL = 'http://185.196.21.189:9888';
 fixture`Blogifier Test`
     .page`${URL}/admin/register`;
 
