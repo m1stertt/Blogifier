@@ -24,8 +24,8 @@ pipeline {
         }
         stage("Execute UI tests") {
             steps {
-                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe chromium ${TEST_FILES} -s takeOnFails=true path=/screenshots"
-                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe firefox ${TEST_FILES} -s takeOnFails=true path=/screenshots"
+                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe chromium ${TEST_FILES} -s takeOnFails=true path=/screenshots/chromium"
+                sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe firefox ${TEST_FILES} -s takeOnFails=true path=/screenshots/firefox"
             }
             post {
                 always {
