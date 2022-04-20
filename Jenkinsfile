@@ -22,12 +22,9 @@ pipeline {
                 sh "chmod a=rwx ${SCREENSHOT_PATH}"
             }
         }
-        stage("Execute TestCafe - chromium tests") {
+        stage("Execute UI tests") {
             steps {
                 sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe chromium ${TEST_FILES} -s takeOnFails=true path=/screenshots/chromium"
-            }
-        stage("Execute TestCafe - firefox tests") {
-            steps {
                 sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe firefox ${TEST_FILES} -s takeOnFails=true path=/screenshots/firefox"
             }
             post {
