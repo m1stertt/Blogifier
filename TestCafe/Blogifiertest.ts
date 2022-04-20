@@ -2,18 +2,18 @@ import {Selector} from 'testcafe';
 import {ClientFunction} from 'testcafe';
 
 const URL = 'http://185.196.21.189:9888';
-fixture`Blogifier Test`
+fixture`Admin register test`
     .page`${URL}/admin/register`;
 
-test('Blogifier Create admin test', async t => {
+// Random email. Not 100 safe since there is a chance even though it is small for the same email to be generated.
+var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+var string = '';
+for (var i = 0; i < 15; i++) {
+    string += chars[Math.floor(Math.random() * chars.length)];
+}
 
-    var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
-    var string = '';
-    for (var i = 0; i < 15; i++) {
-        string += chars[Math.floor(Math.random() * chars.length)];
-    }
-    var email = string + '@gmail.com';
-    // Generates a random "Gmail"
+var email = string + '@gmail.com';
+test('Blogifier Create admin test', async t => {
 
     // Saving selector constants.
     const registerEmail = Selector('#registerEmail');
@@ -61,5 +61,24 @@ test('Blogifier Create admin test', async t => {
     // await t
     //     .expect(ClientFunction(() => document.location.href)()).contains('http://localhost:5000/admin/login');
 
+
+});
+
+fixture`Admin login test`
+    .page`${URL}/admin/login`;
+test('Blogifier login test', async t => {
+    const loginEmail = Selector('#loginEmail');
+    const password = Selector('#loginPassword');
+    const loginButton = Selector('#loginButton');
+    
+    // Setting login credentials
+    await t
+        .typeText(loginEmail, email).expect(loginEmail.value).eql(email);
+    await t
+        .typeText(password, 'helloWorld').expect('helloWorld').eql('helloWorld');
+
+    // Clicking register button
+    await t
+        .click(loginButton);
 
 });
