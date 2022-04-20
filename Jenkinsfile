@@ -22,9 +22,18 @@ pipeline {
                 sh "chmod a=rwx ${SCREENSHOT_PATH}"
             }
         }
-        stage("Execute UI tests") {
+        stage("Execute chromium testCafe tests") {
             steps {
                 sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe chromium ${TEST_FILES} -s takeOnFails=true path=/screenshots/chromium"
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: "${SCREENSHOT_PATH}/**", allowEmptyArchive: true
+                }
+            }
+        }
+        stage("Execute firefox testCafe tests") {
+            steps {
                 sh "docker run --rm -v `pwd`/${TEST_FOLDER}:/tests -v `pwd`/${SCREENSHOT_PATH}:/screenshots --network=host testcafe/testcafe firefox ${TEST_FILES} -s takeOnFails=true path=/screenshots/firefox"
             }
             post {
