@@ -5,7 +5,7 @@ const URL = 'http://185.196.21.189:9888';
 fixture`Admin register test`
     .page`${URL}/admin/register`;
 
-// Random email. Not 100 safe since there is a chance even though it is small for the same email to be generated.
+// Random email. Not 100% safe since there is a chance even though it is small for the same email to be generated.
 var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
 var string = '';
 for (var i = 0; i < 15; i++) {
@@ -46,7 +46,7 @@ test('Blogifier Create admin test', async t => {
     await t
         .expect(registerPassword.value).notEql('', 'Password has to be entered');
     await t
-        .expect(registerConfirmPassword.value).notEql('', 'Confirm password has to be entered');
+        .expect(registerConfirmPassword.value).notEql('', 'Confirm password has to be entered').takeScreenshot();
 
     // Clicking register button
     await t
@@ -56,8 +56,9 @@ test('Blogifier Create admin test', async t => {
     const getLocation = ClientFunction(() => document.location.href);
     // Check if page has changed to login
     await t
-        .expect(getLocation()).contains(`${URL}/admin/login`, {timeout: 5000});
+        .expect(getLocation()).contains(`${URL}/admin/login`, {timeout: 5000}).takeScreenshot();
 
+    // One liner instead.
     // await t
     //     .expect(ClientFunction(() => document.location.href)()).contains('http://localhost:5000/admin/login');
 
@@ -75,10 +76,16 @@ test('Blogifier login test', async t => {
     await t
         .typeText(loginEmail, email).expect(loginEmail.value).eql(email);
     await t
-        .typeText(password, 'helloWorld').expect('helloWorld').eql('helloWorld');
+        .typeText(password, 'helloWorld').expect('helloWorld').eql('helloWorld').takeScreenshot();
 
     // Clicking register button
     await t
         .click(loginButton);
-
+    
+    // Save location of page
+    const getLocation = ClientFunction(() => document.location.href);
+    
+    // Check if page has changed to login
+    await t
+        .expect(getLocation()).contains(`${URL}/admin`, {timeout: 5000}).takeScreenshot();
 });
